@@ -7,11 +7,9 @@ export default function TodoForm() {
         <>
         <form className="form">
          
-            <label >New task:       </label>
+           <label >New task:</label>
            <input type="text"  placeholder="Input task" />
-       
-           
-             <button type="submit">Submit</button>
+           <button type="submit">Submit</button>
         </form>
         </>
     )
