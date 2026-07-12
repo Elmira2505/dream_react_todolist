@@ -1,4 +1,5 @@
 //import { useState } from "react"
+import 'App.css'
 
 
 export default function TodoForm() {
@@ -6,9 +7,9 @@ export default function TodoForm() {
     return (
       <>
         <form className="form">
-          <label htmlFor="task">New task:</label>
+          <label htmlFor="task">TO do:</label>
           <input id="task" type="text" placeholder="Input task" />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled>Submit</button>
         </form>
       </>
     );

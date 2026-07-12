@@ -1,7 +1,7 @@
 
 import './App.css'
-import TodoList from './components/todolist/Todolist'
-import TodoForm from './components/todoform/TodoForm'
+import TodoList from "./components/Todolist";
+import TodoForm from './components/TodoForm'
 
 function App() {
 

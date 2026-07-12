@@ -4,15 +4,13 @@
     --text-color: #333;
     --border-radius: 8px;
     --border-color: #838181;
-  
-        --header-color: #328f84;
-            --lis1-color: #a1d0cd;
-    --list2-color: #9ed2cd;
-        --list3-color: #e8e7e2;
-        --list4-color: #d4e8e6;
-        --list5-color: #edededfc;
-        --container-color1: #eeddf7;
-        --container-color:#dfdddd;;
+    --header-color: #328f84;
+    --list-color1: #ededed;
+    --list-color2: #e7e6e1;
+    --list-color3:  #d4e8e6;
+    --list-color4:  #a2d0cd;
+    --container-color1: #eeddf7;
+    --container-color:#dfdddd;;
 }
 #root {
     min-height: 100%;
