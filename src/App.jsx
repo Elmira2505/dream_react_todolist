@@ -1,6 +1,6 @@
 
 import './App.css'
-import TodoList from "./Todolist.jsx";
+import TodoList from './Todolist.jsx';
 import TodoForm from './TodoForm.jsx'
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <h1 className="header">Todo List</h1>
 
       <TodoForm />
-      <TodoList  />
+      <TodoList />
     </div>
   );
 }
