@@ -1,7 +1,7 @@
 
 import './App.css'
-import TodoList from "./Todolist";
-import TodoForm from './TodoForm'
+import TodoList from "./Todolist.jsx";
+import TodoForm from './TodoForm.jsx'
 
 function App() {
 
@@ -11,8 +11,8 @@ function App() {
     <div className="container">
       <h1 className="header">Todo List</h1>
 
-      <TodoForm className="form" />
-      <TodoList classname="listItem" />
+      <TodoForm />
+      <TodoList  />
     </div>
   );
 }
