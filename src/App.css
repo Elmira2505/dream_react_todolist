@@ -30,7 +30,7 @@
     background-color: var(--header-color);
     color: white;
     text-align: center;
-    padding: 15px auto;
+    padding: 15px 0;
 }
 form{
     padding: 12px 16px;
