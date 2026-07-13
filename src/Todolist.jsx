@@ -7,7 +7,6 @@ export default function TodoList() {
   
   const listColors = ["var(--list-color1)",  "var(--list-color2)",  "var(--list-color3)",  "var(--list-color4)"]
 
-          
 
   return (
 
@@ -16,7 +15,7 @@ export default function TodoList() {
           <li
             className="todo-item"
             style={{ backgroundColor: listColors[index % listColors.length] }}
-            key={index}
+            key={elem.id}
           >
             {elem.title}
           </li>

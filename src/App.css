@@ -47,7 +47,8 @@ input{
     border: 1px solid #838181;
     border-radius: 8px;
     margin: 0 15px;
-    
+    box-sizing: content-box;
+    outline: 0 !important;
 }
 button {
     padding: 12px 16px;
