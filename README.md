@@ -15,8 +15,8 @@ React.js
 ## Installation
 Create new local folder.  
  Open terminal: 
- 1. git clone https://github.com/Elmira2505/react_todo.git
+ 1. git clone https://github.com/Elmira2505/dream_react_todolist.git
 2. npm install
 
 ## How to run the development server
- 1.npm ruv dev
+ 1.npm run dev
