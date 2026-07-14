@@ -9,6 +9,7 @@ export default function TodoList() {
 
 
   return (
+    <>
       <ul>
         {todoList.map((todo, index) => (
           <li
@@ -20,5 +21,6 @@ export default function TodoList() {
           </li>
         ))}
       </ul>
+      </>
   );
 }
