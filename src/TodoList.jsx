@@ -9,18 +9,16 @@ export default function TodoList() {
 
 
   return (
-
       <ul>
-        {todoList.map((elem, index) => (
+        {todoList.map((todo, index) => (
           <li
             className="todo-item"
             style={{ backgroundColor: listColors[index % listColors.length] }}
-            key={elem.id}
+            key={todo.id}
           >
-            {elem.title}
+            {todo.title}
           </li>
         ))}
       </ul>
-
   );
 }
