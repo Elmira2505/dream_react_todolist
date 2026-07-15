@@ -1,4 +1,3 @@
-
 import './App.css'
 
 function App() {
@@ -8,10 +7,9 @@ function App() {
     {id: 3, title: "code out app"},
   ]
 
-
   return (
     <div>
-      <h1>Todo List</h1>
+      <h1>My Todos</h1>
       <ul>
         {todoList.map((todo) => (
           <li key={todo.id}>{todo.title}</li>
