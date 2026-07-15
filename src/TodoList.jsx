@@ -20,11 +20,13 @@ export default function TodoList() {
             {todo.title}
       </li>
       */}
-      {todoList.map((todo) => (
-         <li key={todo.id}>
-        {todo.title}
-        </li>
-      ))}
-    </ul>
-  );
+      
+   
+
+      
+      {todoList.map(todo => <li key={todo.id}>{todo.title}</li>)}
+     </ul>
+  )
+    
+
 }
