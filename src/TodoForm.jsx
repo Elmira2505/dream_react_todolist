@@ -1,7 +1,7 @@
 export default function TodoForm() {
   //  const [task, setTask] = useState('')
     return (
-        <form className="form">
+        <form>
           <label htmlFor="todoTitle">Todo</label>
           <input id="todoTitle" type="text" />
           <button type="submit" disabled>

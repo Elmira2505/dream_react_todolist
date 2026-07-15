@@ -10,17 +10,20 @@ export default function TodoList() {
 
 
   return (
-       <ul>
-        {todoList.map((todo, index) => (
-         /* <li
-            className="todo-item"
-            style={{ backgroundColor: listColors[index % listColors.length] }}
-            key={todo.id}
-          >
-          */
-               <li className="todo-item" key={todo.id}> {todo.title}
-          </li>
-        ))}
-      </ul>
+    <ul>
+     { /*
+      <li
+        className="todo-item"
+        style={{ backgroundColor: listColors[index % listColors.length] }}
+        key={todo.id}>
+            {todo.title}
+      </li>
+      */}
+      {todoList.map((todo) => (
+         <li key={todo.id}>
+        {todo.title}
+        </li>
+      ))}
+    </ul>
   );
 }
