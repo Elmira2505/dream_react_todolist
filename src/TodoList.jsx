@@ -7,21 +7,21 @@ export default function TodoList() {
   
   /*
   const listColors = ["var(--list-color1)",  "var(--list-color2)",  "var(--list-color3)",  "var(--list-color4)"]
-  */
 
-
-  return (
-    <>
-      <ul>
-        {/*
+   
       <li
         className="todo-item"
         style={{ backgroundColor: listColors[index % listColors.length] }}
         key={todo.id}>
             {todo.title}
       </li>
-      */}
+      
+  */
 
+
+  return (
+    <>
+      <ul>
         {todoList.map((todo) => (
           <li key={todo.id} className="todo-item">
             {todo.title}
