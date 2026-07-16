@@ -8,7 +8,7 @@ export default function TodoList() {
     <>
       <ul>
         {todoList.map((todo) => (
-          <li key={todo.id} className="todo-item">
+          <li key={todo.id}>
             {todo.title}
           </li>
         ))}
@@ -16,3 +16,5 @@ export default function TodoList() {
     </>
   );
 }
+
+
