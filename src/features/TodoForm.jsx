@@ -1,30 +1,30 @@
-import {useRef, useState} from 'react'
-import TextInputWithLabel from '../shared/TextInputWithLabel.jsx'
-import { isValidTodoTitle } from "../utils/todoValidation";
+import { useRef, useState } from "react";
+import TextInputWithLabel from "../shared/TextInputWithLabel.jsx";
+import { isValidTodoTitle } from "../utils/todoValidation.js";
 
+export default function TodoForm({ onAddTodo }) {
+  const inputRef = useRef();
+  const [workingTodoTitle, setWorkingTodoTitle] = useState("");
+  const handleAddtodo = (event) => {
+    event.preventDefault();
 
-
-export default function TodoForm({onAddTodo}) {
-  const inputRef = useRef()
-  const [workingTodoTitle, setWorkingTodoTitle] = useState("")
-  const handleAddtodo = (event)=> {
-    event.preventDefault()
-    
-    const todoTitle= workingTodoTitle.trim()
-    if (todoTitle && todoTitle !== ''){
-      onAddTodo(todoTitle)
-      setWorkingTodoTitle ("")
-      inputRef.current.focus()
+    const todoTitle = workingTodoTitle.trim();
+    if (todoTitle && todoTitle !== "") {
+      onAddTodo(todoTitle);
+      setWorkingTodoTitle("");
+      inputRef.current.focus();
     }
-
-
-  }
-    return (
-      <form onSubmit={handleAddtodo}>
-        <TextInputWithLabel elementId="todoTitle" labelText = "Todo: "
-                            onChange= {(event) => setWorkingTodoTitle(event.target.value)}
-                            ref ={inputRef} value ={workingTodoTitle}/>
-    {/*    <label htmlFor="todoTitle">Todo: </label>
+  };
+  return (
+    <form onSubmit={handleAddtodo}>
+      <TextInputWithLabel
+        elementId="todoTitle"
+        labelText="Todo: "
+        onChange={(event) => setWorkingTodoTitle(event.target.value)}
+        ref={inputRef}
+        value={workingTodoTitle}
+      />
+      {/*    <label htmlFor="todoTitle">Todo: </label>
           <input
           id="todoTitle"
           type="text"
@@ -36,9 +36,9 @@ export default function TodoForm({onAddTodo}) {
           required
         />
         */}
-        <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
-          Add Todo
-        </button>
-      </form>
-    );
+      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
+        Add Todo
+      </button>
+    </form>
+  );
 }
