@@ -14,7 +14,6 @@ export default function TodoForm({onAddTodo}) {
     if (todoTitle && todoTitle !== ''){
       onAddTodo(todoTitle)
       setWorkingTodoTitle ("")
-     // event.target.reset()
       inputRef.current.focus()
     }
 
@@ -23,8 +22,8 @@ export default function TodoForm({onAddTodo}) {
     return (
       <form onSubmit={handleAddtodo}>
         <TextInputWithLabel elementId="todoTitle" labelText = "Todo: "
-  onChange= {(event) => setWorkingTodoTitle(event.target.value)}
-  ref ={inputRef} value ={workingTodoTitle}/>
+                            onChange= {(event) => setWorkingTodoTitle(event.target.value)}
+                            ref ={inputRef} value ={workingTodoTitle}/>
     {/*    <label htmlFor="todoTitle">Todo: </label>
           <input
           id="todoTitle"

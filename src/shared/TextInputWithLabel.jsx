@@ -11,7 +11,7 @@ export default function TextInputWithLabel({
       <input type="text" id={elementId} ref={ref}
         value={value} placeholder={"Todo text"}
         onChange={onChange}
-        required
+        required autoFocus
       />
     </>
   );
