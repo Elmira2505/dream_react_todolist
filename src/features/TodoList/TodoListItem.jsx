@@ -25,13 +25,16 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const handleUpdate = (event) => {
     if (!isEditing) return;
     event.preventDefault();
+     if (!isValidTodoTitle(workingTitle)) {
+       return;
+     }
     onUpdateTodo({ ...todo, title: workingTitle });
     setIsEditing(false);
   };
   
   return (
     <li>
-      <form>
+      <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
             <TextInputWithLabel
@@ -46,7 +49,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             </button>
             <button
               type="submit"
-              onClick={handleUpdate}
+             
               disabled={!isValidTodoTitle(workingTitle)}
             >
               Update
