@@ -5,6 +5,7 @@ import { isValidTodoTitle } from "../../utils/todoValidation.js";
 export default function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
   const [workingTodoTitle, setWorkingTodoTitle] = useState("");
+   
   const handleAddtodo = (event) => {
     event.preventDefault();
 
