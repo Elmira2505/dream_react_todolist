@@ -40,7 +40,11 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
-            <TextInputWithLabel value={workingTitle} onChange={handleEdit} />
+            <TextInputWithLabel
+              value={workingTitle}
+              onChange={handleEdit}
+            
+            />
 
             <button type="button" onClick={handleCancel}>
               Cancel

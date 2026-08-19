@@ -12,9 +12,9 @@ export default function TextInputWithLabel({
       <label htmlFor={elementId}>{labelText}</label>
       <input type="text" id={elementId} ref={ref}
         value={value} 
-        //placeholder={"Todo text"}
+        placeholder={"Todo text"}
         onChange={onChange}
-       // required autoFocus
+        required 
       />
     </>
   );
