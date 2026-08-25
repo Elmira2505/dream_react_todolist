@@ -75,6 +75,7 @@ export default function TodosPage({token}) {
    
   }
   async function completeTodo(id) {
+    let rollback = todoList.find(todo => todo.id === i
     const updateTodoList = todoList.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: true };
@@ -107,6 +108,7 @@ export default function TodosPage({token}) {
   }
 
   async function updateTodo(editedTodo) {
+           let rollback = [...todoList];
     const updatedTodos = todoList.map((todo) => {
       if (todo.id === editedTodo.id) {
         return { ...editedTodo };
@@ -140,6 +142,18 @@ export default function TodosPage({token}) {
   return (
     <div>
   
+    {error && (
+      <div>
+        <p>{error}</p>
+        <button onClick={() => setError("")}>
+          Clear Error
+        </button>
+      </div>
+    )}
+
+    {isTodoListLoading && (
+      <p>Loading...</p>
+    )}
       <TodoForm onAddTodo={addTodo} />
       {todoList.length === 0 ? (
         <p>Add todo above to get started</p>
