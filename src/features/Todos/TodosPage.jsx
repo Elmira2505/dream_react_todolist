@@ -6,7 +6,7 @@ export default function TodosPage({token}) {
   const [todoList, setTodoList] = useState([])
   const [error, setError] = useState("");
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
-  const taskURL = '/api/tasks'
+
       useEffect(() => {
         async function fetchTodos() {
           setIsTodoListLoading(true);
@@ -75,7 +75,7 @@ export default function TodosPage({token}) {
    
   }
   async function completeTodo(id) {
-    let rollback = todoList.find(todo => todo.id === i
+   let rollback = todoList.find((todo) => todo.id === id);
     const updateTodoList = todoList.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: true };
