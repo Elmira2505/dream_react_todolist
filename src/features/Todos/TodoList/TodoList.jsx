@@ -1,6 +1,5 @@
-import { useMemo } from "react";
 import TodoListItem from "./TodoListItem.jsx";
-import EmptyState from "./EmptyState.jsx";
+import { useMemo } from "react";
 
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
   const filteredTodoList = useMemo(() => {
@@ -11,9 +10,9 @@ function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
   }, [todoList, dataVersion]);
 
   return filteredTodoList.todos.length === 0 ? (
-    <EmptyState />
+    <p>Add todo above to get started</p>
   ) : (
-    <ul style={{ listStyle: "none" }}>
+    <ul>
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           key={todo.id}

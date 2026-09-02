@@ -1,16 +1,18 @@
-function FilterInput({ filterTerm, onFilterChange }) {
+export default function FilterInput({ filterTerm, onFilterChange }) {
+  function handleFilterChange(event) {
+    onFilterChange(event.target.value);
+  }
+
   return (
     <div>
-      <label htmlFor="filterInput">Search todos:</label>
+      <label htmlFor="filterInput">Search todos: </label>
       <input
         id="filterInput"
         type="text"
         value={filterTerm}
-        onChange={(e) => onFilterChange(e.target.value)}
+        onChange={handleFilterChange}
         placeholder="Search by title..."
-      />
+      ></input>
     </div>
   );
 }
-
-export default FilterInput;

@@ -1,35 +1,30 @@
-function SortBy({
+export default function SortBy({
   sortBy,
   sortDirection,
   onSortByChange,
   onSortDirectionChange,
 }) {
+  function handleOrder(event) {
+    onSortDirectionChange(event.target.value);
+  }
+
+  function handleSort(event) {
+    onSortByChange(event.target.value);
+  }
+
   return (
     <div>
-      <div>
-        <label htmlFor="sortBy">Sort by</label>
-        <select
-          id="sortBy"
-          value={sortBy}
-          onChange={(e) => onSortByChange(e.target.value)}
-        >
-          <option value="creationDate">Creation Date</option>
-          <option value="title">Title</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="sortDirection">Order</label>
-        <select
-          id="sortDirection"
-          value={sortDirection}
-          onChange={(e) => onSortDirectionChange(e.target.value)}
-        >
-          <option value="desc">Descending</option>
-          <option value="asc">Ascending</option>
-        </select>
-      </div>
+      <label htmlFor="sortBy">Sort By </label>
+      <select id="sortBy" value={sortBy} onChange={handleSort}>
+        <option value="createdAt">Created At</option>
+        <option value="title">Title</option>
+      </select>
+
+      <label htmlFor="sortDirection">Order </label>
+      <select id="sortDirection" value={sortDirection} onChange={handleOrder}>
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
+      </select>
     </div>
   );
 }
-
-export default SortBy;
