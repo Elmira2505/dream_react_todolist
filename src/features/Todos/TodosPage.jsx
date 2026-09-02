@@ -1,47 +1,73 @@
-import TodoList from "./TodoList/TodoList.jsx";
-import TodoForm from "./TodoForm.jsx";
-import { useState , useEffect} from "react";
+import { useState, useEffect, useCallback } from "react";
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList/TodoList";
+import SortBy from "../../shared/SortBy";
+import FilterInput from "../../shared/FilterInput";
+import useDebounce from "../../utils/useDebounce";
 
-export default function TodosPage({token}) {
-  const [todoList, setTodoList] = useState([])
+function TodosPage({ token }) {
+  const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState("");
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+  const [sortBy, setSortBy] = useState("creationDate");
+  const [sortDirection, setSortDirection] = useState("desc");
+  const [filterTerm, setFilterTerm] = useState("");
+  const debouncedFilterTerm = useDebounce(filterTerm, 300);
+  const [filterError, setFilterError] = useState("");
+  const [dataVersion, setDataVersion] = useState(0);
 
-      useEffect(() => {
-        async function fetchTodos() {
-          setIsTodoListLoading(true);
+  const invalidateCache = useCallback(() => {
+    setDataVersion((prev) => prev + 1);
+  }, []);
 
-          try {
-            const response = await fetch("/api/tasks?limit=100", {
-              headers: {
-                "X-CSRF-TOKEN": token,
-              },
-              credentials: "include",
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              setTodoList([...data.tasks]);
-              setError("");
-            } else if (response.status === 401) {
-              throw new Error(`Unauthorized ${response.statusText}`);
-            } else {
-              throw new Error("An error other than unauthorized occured.");
-            }
-          } catch (e) {
-            setError(`Error: ${e.name} | ${e.message}`);
-          } finally {
-            setIsTodoListLoading(false);
-          }
+  useEffect(() => {
+    async function fetchTodos() {
+      setIsTodoListLoading(true);
+      try {
+        const paramsObject = {
+          sortBy,
+          sortDirection,
+        };
+        if (debouncedFilterTerm) {
+          paramsObject.find = debouncedFilterTerm;
         }
-
-        if (token) {
-          fetchTodos();
+        const params = new URLSearchParams(paramsObject);
+        const response = await fetch(`/api/tasks?${params}`, {
+          headers: { "X-CSRF-TOKEN": token },
+          credentials: "include",
+        });
+        if (response.status === 401) {
+          throw new Error("Unauthorized");
         }
-      }, [token]);
+        if (!response.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+        const data = await response.json();
+        setTodoList(data.tasks);
+        setFilterError("");
+      } catch (err) {
+        if (
+          debouncedFilterTerm ||
+          sortBy !== "creationDate" ||
+          sortDirection !== "desc"
+        ) {
+          setFilterError(`Error filtering/sorting todos: ${err.message}`);
+        } else {
+          setError(`Error fetching todos: ${err.message}`);
+        }
+      } finally {
+        setIsTodoListLoading(false);
+      }
+    }
 
+    if (token) {
+      fetchTodos();
+    }
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
 
-    
+  const handleFilterChange = (newTerm) => {
+    setFilterTerm(newTerm);
+  };
 
   async function addTodo(todoTitle) {
     const newTodo = {
@@ -50,120 +76,139 @@ export default function TodosPage({token}) {
       isCompleted: false,
     };
     setTodoList((previous) => [newTodo, ...previous]);
-     try {
-            const response = await fetch('/api/tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': token,
-            },
-            credentials: 'include',
-            body: JSON.stringify({title: newTodo.title, isCompleted: newTodo.isCompleted})
-            })
-
-            if (response.ok) {
-                const data = await response.json();
-                setTodoList(prev => prev.map(todo => todo.id === newTodo.id ? data : todo))
-            } else {
-                setTodoList(prev => prev.filter(todo => todo.id !== newTodo.id));
-                throw new Error('Failed to add todo');
-            }
-        } catch(e) {
-            setError(`Error: ${e.name} | ${e.message}`);
-        }
-    
-   
-  }
-  async function completeTodo(id) {
-   let rollback = todoList.find((todo) => todo.id === id);
-    const updateTodoList = todoList.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, isCompleted: true };
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+        body: JSON.stringify({ title: todoTitle, isCompleted: false }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add todo");
       }
-      return todo;
-    });
-    setTodoList(updateTodoList);
-      try {
-            
-            const response = await fetch(`/api/tasks/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token,
-                },
-                credentials: 'include',
-                body: JSON.stringify({isCompleted: true})
-            });
+      const data = await response.json();
+      setTodoList((previous) =>
+        previous.map((todo) => (todo.id === newTodo.id ? data : todo)),
+      );
+      invalidateCache();
+    } catch (err) {
+      setTodoList((previous) =>
+        previous.filter((todo) => todo.id !== newTodo.id),
+      );
+      setError(`Error: ${err.name} | ${err.message}`);
+    }
+  }
 
-            if (!response.ok) {
-                setTodoList(previous => previous.map(todo => todo.id === id ? {...rollback} : todo));
-                throw new Error('Failed to complete todo.');
-            } else {
-                setError('');
-            }
-
-        } catch(e) {
-            setError(`Error: ${e.name} | ${e.message}`);  
-        }
+  async function completeTodo(id) {
+    const originalTodo = todoList.find((todo) => todo.id === id);
+    setTodoList((previous) =>
+      previous.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: true } : todo,
+      ),
+    );
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+        body: JSON.stringify({ isCompleted: true }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to complete todo");
+      }
+      invalidateCache();
+    } catch (err) {
+      setTodoList((previous) =>
+        previous.map((todo) => (todo.id === id ? originalTodo : todo)),
+      );
+      setError(`Error: ${err.name} | ${err.message}`);
+    }
   }
 
   async function updateTodo(editedTodo) {
-           let rollback = [...todoList];
-    const updatedTodos = todoList.map((todo) => {
-      if (todo.id === editedTodo.id) {
-        return { ...editedTodo };
+    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+    setTodoList((previous) =>
+      previous.map((todo) =>
+        todo.id === editedTodo.id ? { ...editedTodo } : todo,
+      ),
+    );
+    try {
+      const response = await fetch(`/api/tasks/${editedTodo.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          title: editedTodo.title,
+          isCompleted: editedTodo.isCompleted,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update todo");
       }
-      return todo;
-    });
-    setTodoList(updatedTodos);
-          try {
-            const response = await fetch(`/api/tasks/${editedTodo.id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token,
-                },
-                credentials: 'include',
-                body: JSON.stringify({title: editedTodo.title, isCompleted: editedTodo.isCompleted})
-            })
-
-            
-
-            if (!response.ok) {
-                setTodoList(rollback);
-                throw new Error('Failed to update todo.');
-            } else {
-                setError('');
-            }
-        } catch(e) {
-            setError(`Error: ${e.name} | ${e.message}`);
-        }
+      invalidateCache();
+    } catch (err) {
+      setTodoList((previous) =>
+        previous.map((todo) =>
+          todo.id === editedTodo.id ? originalTodo : todo,
+        ),
+      );
+      setError(`Error: ${err.name} | ${err.message}`);
+    }
   }
+
   return (
     <div>
-  
-    {error && (
-      <div>
-        <p>{error}</p>
-        <button onClick={() => setError("")}>
-          Clear Error
-        </button>
-      </div>
-    )}
-
-    {isTodoListLoading && (
-      <p>Loading...</p>
-    )}
-      <TodoForm onAddTodo={addTodo} />
-      {todoList.length === 0 ? (
-        <p>Add todo above to get started</p>
-      ) : (
-        <TodoList
-          todoList={todoList}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-        />
+      {error && (
+        <div>
+          <p>{error}</p>
+          <button onClick={() => setError("")}>Clear Error</button>
+        </div>
       )}
+      {filterError && (
+        <div>
+          <p>{filterError}</p>
+          <button onClick={() => setFilterError("")}>Clear Filter Error</button>
+          <button
+            onClick={() => {
+              setFilterTerm("");
+              setSortBy("creationDate");
+              setSortDirection("desc");
+              setFilterError("");
+            }}
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
+      {isTodoListLoading && <p>Loading...</p>}
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
+      <FilterInput
+        filterTerm={filterTerm}
+        onFilterChange={handleFilterChange}
+      />
+      <TodoForm onAddTodo={addTodo} />
+      <TodoList
+        todoList={todoList}
+        onCompleteTodo={completeTodo}
+        onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
+      />
     </div>
   );
 }
+
+export default TodosPage;
