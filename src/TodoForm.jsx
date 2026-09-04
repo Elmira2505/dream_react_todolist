@@ -20,13 +20,18 @@ export default function TodoForm({onAddTodo}) {
     return (
       <form onSubmit={handleAddtodo}>
         <label htmlFor="todoTitle">Todo</label>
-        <input id="todoTitle" type="text"
-               ref={inputRef} name="todoTitle"
-               placeholder={'Todo text'}
-               value = {workingTodoTitle}
-               onChange ={(event) => setWorkingTodoTitle(event.target .value)}
-               required
-                />
+        <input
+          id="todoTitle"
+          type="text"
+          ref={inputRef}
+          name="todoTitle"
+          placeholder={"Todo text"}
+          // value={workingTodoTitle}
+      
+          onChange={(event) => event.target.value}
+          //  onChange ={(event) => setWorkingTodoTitle(event.target .value)}
+          required
+        />
         <button type="submit" disabled={!workingTodoTitle.trim()}>
           Add Todo
         </button>
