@@ -7,8 +7,7 @@ export default function TodoForm({onAddTodo}) {
   const [workingTodoTitle, setWorkingTodoTitle] = useState("")
   const handleAddtodo = (event)=> {
     event.preventDefault()
-    
-    const todoTitle= workingTodoTitle.trim()
+    const todoTitle = event.target.todoTitle.value.trim().trim();
     if (todoTitle && todoTitle !== ''){
       onAddTodo(todoTitle)
       setWorkingTodoTitle ("")
