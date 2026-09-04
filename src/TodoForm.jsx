@@ -7,11 +7,11 @@ export default function TodoForm({onAddTodo}) {
   const [workingTodoTitle, setWorkingTodoTitle] = useState("")
   const handleAddtodo = (event)=> {
     event.preventDefault()
-    const todoTitle = event.target.todoTitle.value.trim();
+    const todoTitle = workingTodoTitle.trim();
     if (todoTitle && todoTitle !== ''){
       onAddTodo(todoTitle)
       setWorkingTodoTitle ("")
-      event.target.reset()
+     // event.target.reset()
       inputRef.current.focus()
     }
 
@@ -26,10 +26,8 @@ export default function TodoForm({onAddTodo}) {
           ref={inputRef}
           name="todoTitle"
           placeholder={"Todo text"}
-          // value={workingTodoTitle}
-      
-          onChange={(event) => event.target.value}
-          //  onChange ={(event) => setWorkingTodoTitle(event.target .value)}
+          value={workingTodoTitle}
+          onChange ={(event) => setWorkingTodoTitle(event.target .value)}
           required
         />
         <button type="submit" disabled={!workingTodoTitle.trim()}>
