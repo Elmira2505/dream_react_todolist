@@ -12,7 +12,7 @@ export default function TodoForm({onAddTodo}) {
     if (todoTitle && todoTitle !== ''){
       onAddTodo(todoTitle)
       setWorkingTodoTitle ("")
-     // event.target.reset()
+      event.target.reset()
       inputRef.current.focus()
     }
 

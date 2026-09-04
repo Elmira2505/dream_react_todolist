@@ -20,7 +20,7 @@ function App() {
         isCompleted: false
        }
        setTodoList(previous => [newTodo, ... previous])
-       console.log('todoList',todoList)
+    
     }
     function completeTodo(id){
       const updateTodoList= todoList.map((todo) =>{
