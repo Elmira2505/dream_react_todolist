@@ -41,6 +41,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo}) {
             <TextInputWithLabel
               value={workingTitle}
               ref={inputRef}
+              title=""
               onChange={handleEdit}
             />
             <button type="button" onClick={handleCancel}>
