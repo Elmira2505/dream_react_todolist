@@ -1,5 +1,5 @@
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
-import isValidTodoTitle from '../../utils/todoValidation.js'
+import {isValidTodoTitle} from '../../utils/todoValidation.js'
 
 import { useState, useEffect, useRef } from "react";
 
