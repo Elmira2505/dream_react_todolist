@@ -1,3 +1,3 @@
-export function isTodoValidation(title){
- return title.trim() !== "";
+export function isValidTodoTitle(title) {
+  return title.trim() !== "";
 }

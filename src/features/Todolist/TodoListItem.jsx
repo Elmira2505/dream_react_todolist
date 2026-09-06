@@ -1,7 +1,7 @@
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
 import {isValidTodoTitle} from '../../utils/todoValidation.js'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 
 export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo}) {
   const [isEditing, setIsEditing] = useState(false);
