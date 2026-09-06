@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo}) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef();
   /*
   useEffect(() => {
     if (isEditing) {
@@ -40,7 +40,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo}) {
             <TextInputWithLabel
               value={workingTitle}
               ref={inputRef}
-              labelText=""
+              labelText="Todo"
               onChange={handleEdit}
             />
             <button type="button" onClick={handleCancel}>

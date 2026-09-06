@@ -1,3 +1,3 @@
-export default function isTodoValidation(title){
+export function isTodoValidation(title){
  return title.trim() !== "";
 }
