@@ -18,6 +18,7 @@ export default function TodosPage({ token }) {
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   const invalidateCache = useCallback(() => {
+      console.log("Invalidating memo cache after todo mutation");
     setDataVersion((prev) => prev + 1);
   }, []);
 
@@ -232,7 +233,7 @@ export default function TodosPage({ token }) {
       {filterError ? (
         <div>
           <p>{filterError}</p>
-          <button onClick={handleFilterError}>Clear Filter Error</button>
+          <button onClick={() => setFilterError("")}>Clear Filter Error</button>
           <button onClick={handleReset}>Reset Filters</button>
         </div>
       ) : null}
