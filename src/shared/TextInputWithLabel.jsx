@@ -1,5 +1,5 @@
 export default function TextInputWithLabel({elementId, labelText, onChange, ref, value}) {
-  console.log(labelText);
+  
 
   return (
     <>
@@ -10,6 +10,7 @@ export default function TextInputWithLabel({elementId, labelText, onChange, ref,
         ref={ref}
         value={value}
         onChange={onChange}
+       
       />
     </>
   );
