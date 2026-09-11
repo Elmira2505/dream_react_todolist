@@ -216,7 +216,7 @@ console.log('todolist',todoList)
           <button
             onClick={() => {
               setFilterTerm("");
-              setSortBy("creationDate");
+              setSortBy("createdAt");
               setSortDirection("desc");
               setFilterError("");
             }}
