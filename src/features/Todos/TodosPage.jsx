@@ -200,7 +200,7 @@ export default function TodosPage({ token }) {
       setError(`Error: ${e.name} | ${e.message}`);
     }
   }
-
+console.log('todolist',todoList)
   return (
     <div>
       {error ? (
