@@ -203,19 +203,33 @@ export default function TodosPage({ token }) {
 console.log('todolist',todoList)
   return (
     <div>
-      {error ? (
+      {error && (
         <div>
-          <p>{`${error}`}</p>
-          <button onClick={handleError}>Clear Error</button>
+          <p>{error}</p>
+          <button onClick={() => setError("")}>Clear Error</button>
         </div>
-      ) : null}
-
-      {isTodoListLoading ? <p>{`Loading...`}</p> : null}
-
+      )}
+      {filterError && (
+        <div>
+          <p>{filterError}</p>
+          <button onClick={() => setFilterError("")}>Clear Filter Error</button>
+          <button
+            onClick={() => {
+              setFilterTerm("");
+              setSortBy("creationDate");
+              setSortDirection("desc");
+              setFilterError("");
+            }}
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
+      {isTodoListLoading && <div>Loading todos...</div>}
       <SortBy
         sortBy={sortBy}
-        onSortByChange={setSortBy}
         sortDirection={sortDirection}
+        onSortByChange={setSortBy}
         onSortDirectionChange={setSortDirection}
       />
       <FilterInput
@@ -223,20 +237,12 @@ console.log('todolist',todoList)
         onFilterChange={handleFilterChange}
       />
       <TodoForm onAddTodo={addTodo} />
-
       <TodoList
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
         dataVersion={dataVersion}
       />
-      {filterError ? (
-        <div>
-          <p>{filterError}</p>
-          <button onClick={() => setFilterError("")}>Clear Filter Error</button>
-          <button onClick={handleReset}>Reset Filters</button>
-        </div>
-      ) : null}
     </div>
   );
 }
