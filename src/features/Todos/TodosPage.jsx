@@ -18,7 +18,7 @@ export default function TodosPage({ token }) {
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   const invalidateCache = useCallback(() => {
-      console.log("Invalidating memo cache after todo mutation");
+     // console.log("Invalidating memo cache after todo mutation");
     setDataVersion((prev) => prev + 1);
   }, []);
 
@@ -84,6 +84,10 @@ export default function TodosPage({ token }) {
     setSortBy("createdAt");
     setSortDirection("desc");
     setFilterError("");
+     setFilterTerm("");
+     setSortBy("createdAt");
+     setSortDirection("desc");
+     setFilterError("");
   }
 
   function handleError() {
@@ -200,7 +204,7 @@ export default function TodosPage({ token }) {
       setError(`Error: ${e.name} | ${e.message}`);
     }
   }
-console.log('todolist',todoList)
+
   return (
     <div>
       {error && (
@@ -214,12 +218,7 @@ console.log('todolist',todoList)
           <p>{filterError}</p>
           <button onClick={() => setFilterError("")}>Clear Filter Error</button>
           <button
-            onClick={() => {
-              setFilterTerm("");
-              setSortBy("createdAt");
-              setSortDirection("desc");
-              setFilterError("");
-            }}
+            onClick={handleReset}
           >
             Reset Filters
           </button>
