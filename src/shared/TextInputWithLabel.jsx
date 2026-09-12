@@ -1,23 +1,16 @@
-export default function TextInputWithLabel({
-  elementId,
-  labelText,
-  onChange,
-  ref,
-  value
-}) {
-
+export default function TextInputWithLabel({elementId, labelText, onChange, ref, value}) {
+  console.log(labelText);
 
   return (
     <>
       <label htmlFor={elementId}>{labelText}</label>
-      <input type="text" id={elementId} ref={ref}
-        value={value} 
-        placeholder={"Todo text"}
+      <input
+        id={elementId}
+        type="text"
+        ref={ref}
+        value={value}
         onChange={onChange}
-        required autoFocus
       />
     </>
   );
 }
-
-
