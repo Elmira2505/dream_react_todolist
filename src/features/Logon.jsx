@@ -1,63 +1,59 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
-function Logon({ onSetEmail, onSetToken }) {
+function Logon() {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [isLoggingOn, setIsLoggingOn] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
     setIsLoggingOn(true);
+    setAuthError("");
+
     try {
-      const response = await fetch("/api/users/logon", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
- 
-      if (response.status === 200 && data.name && data.csrfToken) {
-        onSetEmail(data.name);
-        onSetToken(data.csrfToken);
+      const result = await login(email, password);
+
+      if (result.success) {
+        // Login successful, context will update automatically
       } else {
-        setAuthError(`Authentication failed: ${data?.message}`);
+        setAuthError(result.error);
       }
     } catch (error) {
       setAuthError(`Error: ${error.name} | ${error.message}`);
     } finally {
       setIsLoggingOn(false);
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {authError && <p>{authError}</p>}
-      <div>
-        <label htmlFor="email">Email</label>
+    <>
+      <form onSubmit={handleSubmit}>
+        <p>Log onto to get started</p>
+        <label htmlFor="email">email</label>
         <input
-          id="email"
-          type="email"
+          type="text"
+          name="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">password</label>
         <input
-          id="password"
           type="password"
+          name="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </div>
-      <button type="submit" disabled={isLoggingOn}>
-        {isLoggingOn ? "Logging in..." : "Log On"}
-      </button>
-    </form>
+        <button disabled={isLoggingOn}>
+          {isLoggingOn ? <>Logon in progress...</> : <>Log On</>}
+        </button>
+      </form>
+      {authError && <p>{authError}</p>}
+    </>
   );
 }
 
