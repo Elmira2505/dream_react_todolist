@@ -67,7 +67,7 @@ function TodosPage() {
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
             message: `Error fetching todos: ${error.message}`,
-            isFilterError: false,
+            isFilterError: isFilterError,
           },
         });
       }
