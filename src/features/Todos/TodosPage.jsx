@@ -61,15 +61,13 @@ function TodosPage() {
       } catch (error) {
         const isFilterError =
           debouncedFilterTerm ||
-          sortBy !== "creationDate" ||
-          sortDirection !== "desc";
+          sortBy !== "createdAt" ||
+          sortDirection !== "asc";
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
-            message: isFilterError
-              ? `Error filtering/sorting todos: ${error.message}`
-              : `Error fetching todos: ${error.message}`,
-            isFilterError,
+            message: `Error fetching todos: ${error.message}`,
+            isFilterError: false,
           },
         });
       }
@@ -119,11 +117,17 @@ function TodosPage() {
       });
       invalidateCache();
     } catch (error) {
+      const isFilterError =
+        debouncedFilterTerm ||
+        sortBy !== "createdAt" ||
+        sortDirection !== "asc";
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
         payload: {
-          message: `Error adding todo: ${newTodo.title} | Error message: ${error.message}`,
-          tempId,
+          message: isFilterError
+            ? `Error filtering/sorting todos: ${error.message}`
+            : `Error fetching todos: ${error.message}`,
+          isFilterError,
         },
       });
     }
