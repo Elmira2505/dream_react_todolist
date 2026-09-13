@@ -20,9 +20,9 @@ export function AuthProvider({ children }) {
   // Login function
   const login = async (userEmail, password) => {
     const options = {
-      body: JSON.stringify({ email: userEmail, password }),
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: userEmail, password }),
       credentials: "include",
     };
 
