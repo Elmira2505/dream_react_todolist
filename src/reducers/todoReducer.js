@@ -67,8 +67,8 @@ export function todoReducer(state, action) {
         ...state,
         isTodoListLoading: false,
         ...(action.payload.isFilterError
-          ? { filterError: action.payload.message }
-          : { error: action.payload.message }),
+          ? { filterError: action.payload.message, error: "" }
+          : { error: action.payload.message, filterError: "" }),
       };
 
     // Add todo operations
@@ -193,5 +193,6 @@ export function todoReducer(state, action) {
 
     default:
       throw new Error(`Unknown action type: ${action.type}`);
+      
   }
 }
