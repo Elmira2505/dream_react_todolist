@@ -75,7 +75,8 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
-        todoList: [action.payload.tempTodo, ...state.todoList],
+        todoList: [action.payload.tempTodo],
+       // todoList: [action.payload.tempTodo, ...state.todoList],
         error: "",
       };
 
