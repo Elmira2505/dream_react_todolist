@@ -1,6 +1,7 @@
 import "./App.css";
-import TodoList from "./features/Todolist/TodoList.jsx";
-import TodoForm from "./features/TodoForm.jsx";
+import TodosPage from "./features/Todos/TodosPage";
+import Logon from "./features/Logon";
+import Header from "./shared/Header";
 import { useAuth } from "./contexts/AuthContext";
 /*
 const todos = [
@@ -11,8 +12,7 @@ const todos = [
 */
 
 function App() {
-
-const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
