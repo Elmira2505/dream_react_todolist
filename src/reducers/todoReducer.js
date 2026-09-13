@@ -75,8 +75,8 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
-        todoList: [action.payload.tempTodo],
-       // todoList: [action.payload.tempTodo, ...state.todoList],
+       // todoList: [action.payload.tempTodo],
+        todoList: [action.payload.tempTodo, ...state.todoList],
         error: "",
       };
 
@@ -180,8 +180,8 @@ export function todoReducer(state, action) {
       return {
         ...state,
         filterTerm: "",
-        sortBy: "creationDate",
-        sortDirection: "desc",
+        sortBy: "createdAt",
+        sortDirection: "asc",
         filterError: "",
       };
 
