@@ -115,7 +115,7 @@ function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: { tempId, savedTodo },
       });
-      invalidateCache();
+   //   invalidateCache();
     } catch (error) {
       const isFilterError =
         debouncedFilterTerm ||
@@ -124,10 +124,14 @@ function TodosPage() {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
         payload: {
+         /*
           message: isFilterError
             ? `Error filtering/sorting todos: ${error.message}`
             : `Error fetching todos: ${error.message}`,
           isFilterError,
+          */
+          message: `Error fetching todos: ${error.message}`
+        
         },
       });
     }
@@ -161,7 +165,7 @@ function TodosPage() {
         throw new Error(resp.message || "Failed to complete todo");
       }
       dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS });
-      invalidateCache();
+     // invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
@@ -203,7 +207,7 @@ function TodosPage() {
         throw new Error(resp.message || "Failed to update todo");
       }
       dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS });
-      invalidateCache();
+     // invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
