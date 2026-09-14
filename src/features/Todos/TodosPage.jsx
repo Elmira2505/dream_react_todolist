@@ -60,7 +60,7 @@ function TodosPage() {
         });
       } catch (error) {
         const isFilterError =
-          debouncedFilterTerm ||
+          Boolean(debouncedFilterTerm) ||
           sortBy !== "createdAt" ||
           sortDirection !== "asc";
         dispatch({
@@ -119,7 +119,7 @@ function TodosPage() {
    //   invalidateCache();
     } catch (error) {
       const isFilterError =
-        debouncedFilterTerm ||
+        Boolean(debouncedFilterTerm) ||
         sortBy !== "createdAt" ||
         sortDirection !== "asc";
       dispatch({
