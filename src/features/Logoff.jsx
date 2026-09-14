@@ -9,16 +9,19 @@ function Logoff() {
   async function handleLogoff() {
     setIsLoggingOff(true);
     setError("");
+    try {
+      const result = await logout();
 
-    const result = await logout();
-
-    if (result.success) {
-      // Logout successful, context will update automatically
-    } else {
-      setError(result.error);
+      if (!result.success) {
+        setError(result.error);
+        setIsLoggingOff(false);
+      }
+    } catch (error) {
+      setError(`Error: ${error.name} | ${error.message}`);
+    } finally {
       setIsLoggingOff(false);
     }
-  }
+  } 
   return (
     <>
       <button onClick={handleLogoff} disabled={isLoggingOff}>

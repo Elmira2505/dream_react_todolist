@@ -16,11 +16,10 @@ function Logon() {
     try {
       const result = await login(email, password);
 
-      if (result.success) {
-        // Login successful, context will update automatically
-      } else {
-        setAuthError(result.error);
+      if (!result.success) {
+              setAuthError(result.error);
       }
+      setAuthError("")
     } catch (error) {
       setAuthError(`Error: ${error.name} | ${error.message}`);
     } finally {
