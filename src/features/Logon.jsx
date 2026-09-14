@@ -18,6 +18,7 @@ function Logon() {
 
       if (!result.success) {
               setAuthError(result.error);
+              return
       }
       setAuthError("")
     } catch (error) {
