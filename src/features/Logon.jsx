@@ -20,7 +20,7 @@ function Logon() {
               setAuthError(result.error);
               return
       }
-      setAuthError("")
+     
     } catch (error) {
       setAuthError(`Error: ${error.name} | ${error.message}`);
     } finally {
