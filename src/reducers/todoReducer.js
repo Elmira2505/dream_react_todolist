@@ -92,10 +92,12 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_ERROR:
       return {
         ...state,
-        error: action.payload.message,
+        //error: action.payload.message,
         todoList: state.todoList.filter(
           (todo) => todo.id !== action.payload.tempId,
         ),
+        error: action.payload.isFilterError ? "" : action.payload.message,
+        filterError: action.payload.isFilterError ? action.payload.message : "",
       };
 
     // Complete todo operations
@@ -105,7 +107,7 @@ export function todoReducer(state, action) {
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.id ? { ...todo, isCompleted: true } : todo,
         ),
-        error: "",
+        error: action.payload.message,
       };
 
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
@@ -132,7 +134,7 @@ export function todoReducer(state, action) {
             ? action.payload.editedTodo
             : todo,
         ),
-        error: "",
+      error: action.payload.message,
       };
 
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
@@ -156,12 +158,16 @@ export function todoReducer(state, action) {
         ...state,
         sortBy: action.payload.sortBy,
         sortDirection: action.payload.sortDirection,
+        error: "",
+        filterError: "",
       };
 
     case TODO_ACTIONS.SET_FILTER:
       return {
         ...state,
         filterTerm: action.payload.filterTerm,
+        error:'',
+        filterError:'',
       };
 
     case TODO_ACTIONS.CLEAR_ERROR:
