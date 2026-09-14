@@ -1,7 +1,8 @@
 import "./App.css";
-import TodoList from "./features/Todolist/TodoList.jsx";
-import TodoForm from "./features/TodoForm.jsx";
-import { useState } from "react";
+import TodosPage from "./features/Todos/TodosPage";
+import Logon from "./features/Logon";
+import Header from "./shared/Header";
+import { useAuth } from "./contexts/AuthContext";
 /*
 const todos = [
   { id: 1, title: "review resources" },
@@ -11,49 +12,19 @@ const todos = [
 */
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  const { isAuthenticated } = useAuth();
 
-  function addTodo(todoTitle) {
-    const newTodo = {
-      id: Date.now(),
-      title: todoTitle,
-      isCompleted: false,
-    };
-    setTodoList((previous) => [newTodo, ...previous]);
-  }
-  function completeTodo(id) {
-    const updateTodoList = todoList.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, isCompleted: true };
-      }
-      return todo;
-    });
-    setTodoList(updateTodoList);
-  }
-  const updateTodo = (editedTodo) => {
-    const updateTodos = todoList.map((todo) => {
-      if (todo.id === editedTodo.id) {
-        return { ...editedTodo };
-      } else {
-        return todo;
-      }
-    });
-    setTodoList(updateTodos);
-  };
   return (
-    <div>
-      <h1>Todo List</h1>
-      <TodoForm onAddTodo={addTodo} />
-      {todoList.length === 0 ? (
-        <p>Add todo above to get started</p>
+    <>
+      <Header />
+      {isAuthenticated ? (
+        <TodosPage />
       ) : (
-        <TodoList
-          todoList={todoList}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-        />
+        <>
+          <Logon />
+        </>
       )}
-    </div>
+    </>
   );
 }
 
