@@ -66,6 +66,7 @@ function TodosPage() {
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
+            
             message: `Error fetching todos: ${error.message}`,
             isFilterError: isFilterError,
           },
@@ -124,13 +125,13 @@ function TodosPage() {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
         payload: {
-         /*
+        tempId,
           message: isFilterError
             ? `Error filtering/sorting todos: ${error.message}`
             : `Error fetching todos: ${error.message}`,
           isFilterError,
-          */
-          message: `Error fetching todos: ${error.message}`
+          
+          //message: `Error fetching todos: ${error.message}`
         
         },
       });
@@ -226,12 +227,12 @@ function TodosPage() {
       payload: { filterTerm: newFilterTerm },
     });
   };
-
+/*
   const invalidateCache = useCallback(() => {
     console.log("Invalidating memo cache after todo mutation");
     dispatch({ type: TODO_ACTIONS.INVALIDATE_CACHE });
   }, []);
-
+*/
   return (
     <div>
       {error && (
